@@ -1,0 +1,13 @@
+---
+
+- ansible.builtin.include_role:
+    name: alex.proxmox.rebuild
+
+- ansible.builtin.include_role: # install docker
+    name: alex.debian12.installdocker
+
+- ansible.builtin.include_role:
+    name: alex.debian12.configureos
+
+- ansible.builtin.include_role: # convert
+    name: alex.proxmox.convert

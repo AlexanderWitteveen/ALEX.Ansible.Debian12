@@ -1,0 +1,63 @@
+---
+
+- ansible.builtin.include_role: # aptupgrade
+    name: alex.debian12.aptupgrade
+
+- name: Install a list of packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+  vars:
+    packages:
+    - cifs-utils
+    ansible_connection: ssh
+    ansible_host: "{{ prop_ipaddress }}"
+  become: true
+
+- name: Template a file to /etc/file.conf
+  ansible.builtin.template:
+    src: .smbcred.j2
+    dest: "/home/{{ prop_admin_username }}/.{{ prop_basename }}/.smbcred"
+    owner: "{{ prop_admin_username }}"
+    group: "{{ prop_admin_groupname }}"
+    mode: '0400'
+  vars:
+    ansible_connection: ssh
+    ansible_host: "{{ prop_ipaddress }}"
+  become: true
+
+- name: Mount SMB volume
+  ansible.posix.mount:
+    src: "{{ item.source }}"
+    path: "{{ item.path }}"
+    opts: 'rw,auto,vers=3,file_mode=0777,dir_mode=0777,dom=WORKGROUP,credentials=/home/{{ prop_admin_username }}/.{{ prop_basename }}/.smbcred'
+    fstype: cifs
+    state: mounted
+  loop: "{{ prop_smb_mounts }}"
+  vars:
+    ansible_connection: ssh
+    ansible_host: "{{ prop_ipaddress }}"
+  become: true
+
+- ansible.builtin.include_role: # certificates
+    name: alex.debian12.certificates
+
+- name: Set a hostname
+  ansible.builtin.hostname:
+    name: "{{ prop_hostname }}"
+  register: hostnameresult
+  vars:
+    ansible_connection: ssh
+    ansible_host: "{{ prop_ipaddress }}"
+  become: true
+
+- name: Conditionally reboot the machine with all defaults
+  reboot:
+  when: hostnameresult.changed
+  vars:
+    ansible_connection: ssh
+    ansible_host: "{{ prop_ipaddress }}"
+  become: true
+
+

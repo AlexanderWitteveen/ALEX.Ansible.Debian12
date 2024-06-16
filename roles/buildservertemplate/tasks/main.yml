@@ -1,0 +1,14 @@
+---
+
+- ansible.builtin.include_role:
+    name: alex.proxmox.rebuild
+
+- ansible.builtin.include_role: # configurebase
+    name: alex.debian12.configureserver
+
+- ansible.builtin.include_role:
+    name: alex.debian12.configureos
+
+- ansible.builtin.include_role: # convert
+    name: alex.proxmox.convert
+

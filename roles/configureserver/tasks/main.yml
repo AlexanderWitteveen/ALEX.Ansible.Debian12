@@ -1,0 +1,24 @@
+---
+
+- name: Install basecommands all
+  apt:
+    name:
+      - pgp
+      - pip
+      - pipx
+      - wget
+      - curl
+      - dnsutils
+      - nmap
+      - net-tools
+      - jq
+    state: present
+    update_cache: yes
+  vars:
+    ansible_connection: ssh
+    ansible_host: "{{ prop_ipaddress }}"
+  become: true
+
+- ansible.builtin.include_role: # ms.server
+    name: alex.ms.server
+
