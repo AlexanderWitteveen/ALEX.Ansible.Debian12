@@ -1,7 +1,7 @@
 ---
 
 - ansible.builtin.include_role:
-    name: alex.proxmox.rebuild
+    name: alex.debian12.buildvm
 
 - ansible.builtin.include_role: # install docker
     name: alex.debian12.installdocker
