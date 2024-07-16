@@ -15,6 +15,18 @@
     ansible_host: "{{ prop_ipaddress }}"
   become: true
 
+- name: Install pip python package
+  ansible.builtin.pip:
+    name: "{{ item }}"
+  loop:
+    - pyyaml
+    - requests
+    - requests-toolbelt
+  vars:
+    ansible_connection: ssh
+    ansible_host: "{{ prop_ipaddress }}"
+  become: true
+
 - name: Template a file to /etc/file.conf
   ansible.builtin.template:
     src: .smbcred.j2

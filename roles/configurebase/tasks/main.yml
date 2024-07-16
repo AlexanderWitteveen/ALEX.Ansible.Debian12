@@ -31,8 +31,7 @@
   register: result
   changed_when: '"Changed" in result.stdout'
   failed_when: '("Error" in result.stdout) or ("Host key verification failed." in result.stdout)'
-  vars:
-    ansible_connection: local
+  connection: local
   become: false
 
 - name: Ensure autologon
@@ -65,7 +64,7 @@
 
 - name: Remote install python3
   shell: |
-    {{ role_path }}/scripts/remote.install.python3.sh "{{ prop_ipaddress }}" "{{ prop_admin_username }}"
+    {{ role_path }}/scripts/remote.install.python3.sh "{{ prop_ipaddress }}" "{{ prop_admin_username }}" "{{ prop_basename }}"
     if [[ "$?" != "0" ]]; then
       echo "Error executing script" 
     fi
@@ -76,16 +75,6 @@
   failed_when: '"Error" in expectresult.stdout'
   connection: local
   become: false
-
-- name: Create a symbolic link python link
-  ansible.builtin.file:
-    src: /usr/bin/python3
-    dest: /usr/bin/python
-    state: link
-  vars:
-    ansible_connection: ssh
-    ansible_host: "{{ prop_ipaddress }}"
-  become: true
 
 - name: Install systemd-timesyncd to ensure time is in sync
   apt:
