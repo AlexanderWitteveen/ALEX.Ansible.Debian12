@@ -49,5 +49,4 @@
   vars:
     ansible_connection: ssh
     ansible_host: "{{ prop_ipaddress }}"
-    ansible_python_interpreter: "{{ prop_python_path }}"
   become: true
