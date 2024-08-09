@@ -19,6 +19,10 @@
     ansible_host: "{{ prop_ipaddress }}"
   become: true
 
-- ansible.builtin.include_role: # ms.server
-    name: alex.ms.server
+- ansible.builtin.include_role: # dotnet
+    name: alex.debian12.installdotnet
+
+# - ansible.builtin.include_role: # powershell
+#     name: alex.debian12.installpwsh
+
 

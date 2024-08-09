@@ -1,11 +1,15 @@
 ---
 
 - ansible.builtin.include_role:
-    name: alex.proxmox.rebuild
+    name: alex.proxmox.rebuildvm
 
 - ansible.builtin.include_role: # configurebase
     name: alex.debian12.configurebase
 
-- ansible.builtin.include_role: # convert
-    name: alex.proxmox.convert
+- ansible.builtin.include_role: # export
+    name: alex.proxmox.exportvm
+
+# - ansible.builtin.include_role: # remove
+#     name: alex.proxmox.removevm
+
 

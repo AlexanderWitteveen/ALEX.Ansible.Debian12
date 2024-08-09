@@ -1,0 +1,41 @@
+---
+
+# - name: Install script a64/x64
+#   shell: |
+#     wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
+#     chmod +x ./dotnet-install.sh
+#     ./dotnet-install.sh --channel 8.0
+#   vars:
+#     ansible_connection: ssh
+#     ansible_host: "{{ prop_ipaddress }}"
+#   become: true
+
+- name: Install a list of packages
+  apt:
+    deb: "//mnt/sources-dev/deb/dotnet/packages-microsoft-prod.deb"
+    state: present
+  vars:
+    ansible_connection: ssh
+    ansible_host: "{{ prop_ipaddress }}"
+  become: true
+
+- name: Install a list of packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+  vars:
+    packages:
+    - libc6
+    - libgcc-s1
+    - libgssapi-krb5-2
+    - libicu72
+    - libssl3
+    - libstdc++6
+    - zlib1g
+    - dotnet-runtime-8.0  
+    ansible_connection: ssh
+    ansible_host: "{{ prop_ipaddress }}"
+  become: true
+
+
