@@ -12,6 +12,7 @@
       - nmap
       - net-tools
       - jq
+      - default-jre
     state: present
     update_cache: yes
   vars:

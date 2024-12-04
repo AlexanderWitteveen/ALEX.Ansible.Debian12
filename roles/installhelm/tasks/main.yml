@@ -42,11 +42,15 @@
     ansible_host: "{{ prop_ipaddress }}"
   become: true
 
-- name: Install Python modules
-  ansible.builtin.pip:
-    name: pyyaml
-    executable: pip
-  vars:
-    ansible_connection: ssh
-    ansible_host: "{{ prop_ipaddress }}"
-  become: true
+# - name: Install pip python package
+#   ansible.builtin.pip:
+#     name: "{{ item }}"
+#   loop:
+#     - pyyaml
+#   vars:
+#     ansible_connection: ssh
+#     ansible_host: "{{ prop_ipaddress }}"
+#   become: true
+
+
+
