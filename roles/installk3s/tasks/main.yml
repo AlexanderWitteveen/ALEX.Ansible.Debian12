@@ -43,6 +43,16 @@
     ansible_host: "{{ prop_ipaddress }}"
   become: true
 
+- name: chmod k3s
+  shell: |
+    chmod 660 /etc/rancher/k3s/k3s.yaml
+  args:
+    executable: /bin/bash
+  vars:
+    ansible_connection: ssh
+    ansible_host: "{{ prop_ipaddress }}"
+  become: true
+
 - name: Copy profile file
   ansible.builtin.template:
     src: "profile.k3s.sh.j2"
@@ -101,3 +111,4 @@
 #     ansible_connection: ssh
 #     ansible_host: "{{ prop_ipaddress }}"
 #   become: true
+
