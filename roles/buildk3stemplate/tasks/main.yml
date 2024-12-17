@@ -9,6 +9,9 @@
 - ansible.builtin.include_role: # install helm
     name: alex.debian12.installhelm
 
+- ansible.builtin.include_role: # install nerdctl
+    name: alex.debian12.installnerdctl
+
 - ansible.builtin.include_role:
     name: alex.debian12.configureos
 
