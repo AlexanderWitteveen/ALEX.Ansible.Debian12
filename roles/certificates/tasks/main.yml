@@ -127,7 +127,15 @@
           "{{ prop_description }}" \
           "/{{ prop_basename }}/certificates/host.csr" \
           --san {{ prop_hostname }} \
-          --san {{ prop_hostname }}.{{ prop_dns_local }} \
+          {% if prop_vm_network is defined %}
+            {% for vm_network in prop_vm_network %}
+              {% if vm_network["dns"] is defined %}
+                {% for dns in vm_network["dns"] %}
+                  --san {{ dns["name"] | default(prop_hostname) }}.{{ dns["domain"] }} \
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
           --san localhost \
           --san 127.0.0.1 \
           --san {{ prop_ipaddress }} \
