@@ -1,0 +1,15 @@
+---
+
+# - name: Load docker
+#   shell: for id in $(docker container ls -a -q); do docker container kill $id; docker container rm $id; echo "changedtrue"; done
+#   args:
+#     executable: /bin/bash
+#   register: taskresult
+#   changed_when:
+#   - '"changedtrue" in taskresult.stdout'
+#   vars:
+#     ansible_connection: ssh
+#     ansible_host: "{{ prop_ipaddress }}"
+#   become: true
+
+
